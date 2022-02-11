@@ -66,7 +66,7 @@
  
 
 ///////////
-
+ const generateMarkdown = require("./utils/generateMarkdown")
  const inquirer = require('inquirer');
  const fs = require('fs');
 
@@ -124,59 +124,10 @@
         message: 'How do people contact you for questions?'
      },
     ])
-.then(({
-    title, 
-    repo,
-    description,
-    table,
-    installation,
-    usage,
-    license,
-    contributors,
-    testing,
-    questions
-}) => {
-    const readMeTemplatee = 
-    `# ${title}
-    
-    - [Description](#description)
-    - [Table of Contents](#tableofcontents)
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [License](#license)
-    - [Contributors](#contributors)
-    - [Testing](#testing)
-    - [Questions](#questions)
+.then((data) => {
+    const readMeTemplate = generateMarkdown(data)
 
-    # Description
-    ${description}
-    # Table of Contents
-    ${table}
-    # Installation
-    ${installation}
-    ## Usage
-    ${usage}
-    ## License
-    ${license}
-    # Contributors
-    ${contributors}
-    # Testing
-    ${testing}
-    # Questions
-    ${questions}
-
-    Contact Information:
-    - GitHub: ${repo}
-    - Email: ${email}`
-
-    createNewReadme(title, readMeTemplatee);
+    fs.writeFile('README.md', readMeTemplate, (error) =>
+       error ? console.log(error) : console.log('Generated your README.md')
+    );
 })
-
-
-.then((response) => {
-     const readMeContent = createReadMe(response);
-
-     fs.writeFile('README.md', readMeContent, (error) =>
-        error ? console.log(error) : console.log('Generated your README.md')
-     );
- });
