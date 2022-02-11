@@ -111,7 +111,7 @@
      {
         type: 'input',
         name: 'contributors',
-        message: 'Who are the contibutors to this project?'
+        message: 'To contribute to this project - fork the exisitng repository into an empty repository. Continue press [Enter]'
      },
      {
         type: 'input',
